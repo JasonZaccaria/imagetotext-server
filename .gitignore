@@ -1,0 +1,5 @@
+uploads/
+pool.ts
+pool.js
+.env
+node_modules
