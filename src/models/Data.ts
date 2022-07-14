@@ -1,5 +1,6 @@
 import { pool } from "../services/pool";
 const fs = require("fs"); //used to manipulate folders and files
+import { dataObject } from "../services/Types";
 
 //this class retrieves the data from the db and sends it back to the user
 class Data {
@@ -23,7 +24,7 @@ class Data {
         "SELECT * FROM userposts WHERE email = $1",
         [this.#email]
       );
-      const userTable = results.row;
+      const userTable = results.rows;
       async function enterData() {
         for (let i = 0; i < userTable.length; i++) {
           let tempData = fs.readFileSync(userTable[i]["file"]);

@@ -1,5 +1,6 @@
 import Login from "../models/Login";
 import { Request, Response } from "express";
+import { loginObject } from "../services/Types";
 
 const loginController = async (req: Request, res: Response) => {
   let callLogin: Login = new Login(req.body.user, req.body.pass);

@@ -1,5 +1,6 @@
 import UserData from "../models/UserData";
 import { Request, Response } from "express";
+import { userDataObject } from "../services/Types";
 
 const userDataController = async (req: any, res: Response) => {
   let userDataModel: UserData = new UserData(

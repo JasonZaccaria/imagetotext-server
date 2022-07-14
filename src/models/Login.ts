@@ -1,6 +1,7 @@
 import { pool } from "../services/pool";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+import { loginObject } from "../services/Types";
 
 class Login {
   #email: string;

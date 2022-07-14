@@ -1,6 +1,7 @@
 import { pool } from "../services/pool";
 const multer = require("multer");
 const fs = require("fs"); //used to manipulate folders and files
+import { userDataObject } from "../services/Types";
 
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {

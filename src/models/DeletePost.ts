@@ -1,5 +1,6 @@
 import { pool } from "../services/pool";
 const fs = require("fs"); //used to manipulate folders and files
+import { deletePostObject } from "../services/Types";
 
 class DeletePost {
   #email: string;
@@ -46,31 +47,5 @@ class DeletePost {
     }
   }
 }
-
-app.post("/deletePost", authenticateTokenTwo, async (req: any, res) => {
-  let titleOfPost: string = req.body.titleOfPost;
-  try {
-    //below we grab the file directory from our
-    //const client = await pool.connect();
-    const results = await pool.query(
-      "SELECT file FROM userposts WHERE email = $1 AND title = $2",
-      [req.user.user, titleOfPost]
-    );
-    //results.release();
-    console.table(results.rows[0]["file"]);
-    let removedPost = results.rows[0]["file"];
-    fs.unlinkSync(removedPost);
-    //below we are deleting the rows that contain our post's title form our db
-    const resultsTwo = await pool.query(
-      "DELETE FROM userposts WHERE title = $1",
-      [titleOfPost]
-    );
-    //client.end();
-    //resultsTwo.release();
-  } catch (e) {
-    console.log(e);
-  }
-  res.json({ success: "content deleted from db" });
-});
 
 export default DeletePost;

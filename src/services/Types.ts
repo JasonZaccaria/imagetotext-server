@@ -21,3 +21,5 @@ interface deletePostObject {
   success?: string | undefined;
   failure?: string | undefined;
 }
+
+export { loginObject, dataObject, userDataObject, deletePostObject };

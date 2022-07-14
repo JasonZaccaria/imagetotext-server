@@ -1,5 +1,6 @@
 import DeletePost from "../models/DeletePost";
 import { Request, Response } from "express";
+import { deletePostObject } from "../services/Types";
 
 const deletePostController = async (req: any, res: Response) => {
   let deletePostModel = new DeletePost(req.user.user, req.body.titleOfPost);
