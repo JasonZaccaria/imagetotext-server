@@ -33,7 +33,12 @@ userDataRouter.post(
   }
 );
 
-userDataRouter.post("/userdata", authenticateTokenTwo, userDataController);
+userDataRouter.post(
+  "/userdata",
+  authenticateTokenTwo,
+  upload.single("file"),
+  userDataController
+);
 
 userDataRouter.post("/deletePost", authenticateTokenTwo, deletePostController);
 
