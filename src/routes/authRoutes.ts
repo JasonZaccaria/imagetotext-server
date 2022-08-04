@@ -38,7 +38,7 @@ router.get("/logout", async (req: Request, res: Response) => {
     {
       sameSite: "none",
       secure: true,
-    } /*, { domain: "localhost:3000", path: "/user" }*/
+    }
   );
   res.end();
 });
@@ -53,8 +53,6 @@ router.post("/token", async (req: Request, res: Response) => {
     const compareRefreshQuery = await pool.query(
       "SELECT refresh FROM usertable"
     );
-    //await compareRefreshQuery.end();
-    //compareRefreshQuery.release();
     if (compareRefreshQuery.rows[0] === refreshToken) {
       jwt.verify(
         refreshToken,
@@ -81,6 +79,19 @@ router.post("/token", async (req: Request, res: Response) => {
     );
     res.json({ failure: "could not authenticate refresh token" });
   }
+});
+
+router.get("/halt", (req: Request, res: Response) => {
+  let date = new Date();
+  date.setTime(date.getTime() + 5 * 60 * 1000);
+  res.cookie("halt", "asdfasdf", {
+    sameSite: "none",
+    secure: true,
+    /*maxAge: 300,*/
+    expires: date,
+  });
+  res.json({ success: "halt cookie has been created successfully" });
+  res.end();
 });
 
 export { router };

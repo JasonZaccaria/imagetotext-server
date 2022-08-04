@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt"); //used to hash our users passwords
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 import { checkUsersTwo } from "../services/checkUsers";
 import { db } from "../services/db";
 

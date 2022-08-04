@@ -1,5 +1,5 @@
 import { pool } from "../services/pool";
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 import { dataObject } from "../services/Types";
 
 //this class retrieves the data from the db and sends it back to the user

@@ -1,5 +1,5 @@
 import { pool } from "../services/pool";
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 import { deletePostObject } from "../services/Types";
 
 class DeletePost {

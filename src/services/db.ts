@@ -10,11 +10,6 @@ async function db(userEmail: any, userPassword: any): Promise<void> {
     );
     const resultTwo = await pool.query("SELECT * FROM usertable");
     console.table(resultTwo.rows);
-    //await client.query("COMMIT");
-    //await pool.end(); CHANGE
-    /*adding client.end()*/
-    //client.end();
-    //results.release();
     console.log("client disconnected");
   } catch (e) {
     console.log(`failed to execute ${e}`);

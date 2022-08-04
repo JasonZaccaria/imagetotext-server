@@ -1,6 +1,6 @@
 import { pool } from "../services/pool";
 const multer = require("multer");
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to maodify folders and files
 import { userDataObject } from "../services/Types";
 
 const storage = multer.diskStorage({
@@ -29,10 +29,8 @@ class UserData {
     email: string,
     title: string,
     stringConversion: string,
-    //copiedFilePath: string,
-    filename: string, //new
+    filename: string,
     path: string,
-    //currentDate: string,
     mimetype: string
   ) {
     this.#email = email;
@@ -41,7 +39,6 @@ class UserData {
     this.#path = path;
     this.#copiedFilePath = `uploads/${email}/${filename}`;
     this.#filename = filename;
-    //this.#currentDate = currentDate;
     this.#mimetype = mimetype;
   }
 
@@ -122,7 +119,6 @@ class UserData {
         console.log("file copied to user directory");
       }
     );
-    //let copiedFilePath = `uploads/${req.user.user}/${req.file.filename}`;
     try {
       const results = pool.query(
         "INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)",

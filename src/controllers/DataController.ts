@@ -1,6 +1,5 @@
 import Data from "../models/Data";
 import { Request, Response } from "express";
-//import { authenticateTokenTwo } from "../services/authenticateToken";
 import { dataObject } from "../services/Types";
 
 const dataController = async (req: any, res: Response) => {

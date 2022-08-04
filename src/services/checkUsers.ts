@@ -3,16 +3,11 @@ import { pool } from "./pool";
 async function checkUsersTwo(user: string): Promise<boolean | undefined> {
   let userDuplicate: boolean = false;
   try {
-    //const client = await pool.connect();
     console.log("connected successfully");
     const results = await pool.query(
       "SELECT email FROM usertable WHERE email = $1",
       [user]
     );
-    //results.release();
-    //await pool.end(); CHANGE
-    //client.end();
-    //more changes start
     //testing what happens when unknown user is here
     console.log(results.rows);
     if (results.rows.length === 0) {
