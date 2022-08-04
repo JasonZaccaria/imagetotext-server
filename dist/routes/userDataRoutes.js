@@ -40,5 +40,5 @@ userDataRouter.post("/imageconvert", upload.single("file"), (req, res) => __awai
     const convertedImage = yield (0, textGenerator_1.default)(req.file["path"]);
     res.json({ success: convertedImage });
 }));
-userDataRouter.post("/userdata", authenticateToken_1.authenticateTokenTwo, UserDataController_1.default);
+userDataRouter.post("/userdata", authenticateToken_1.authenticateTokenTwo, upload.single("file"), UserDataController_1.default);
 userDataRouter.post("/deletePost", authenticateToken_1.authenticateTokenTwo, DeletePostController_1.default);

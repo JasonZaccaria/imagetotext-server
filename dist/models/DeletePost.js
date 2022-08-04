@@ -22,7 +22,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _DeletePost_email, _DeletePost_titleOfPost;
 Object.defineProperty(exports, "__esModule", { value: true });
 const pool_1 = require("../services/pool");
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 class DeletePost {
     constructor(email, titleOfPost) {
         _DeletePost_email.set(this, void 0);

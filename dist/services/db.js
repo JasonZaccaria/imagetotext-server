@@ -19,11 +19,6 @@ function db(userEmail, userPassword) {
             const results = yield pool_1.pool.query("INSERT INTO usertable(email, password) VALUES($1, $2)", [userEmail, userPassword]);
             const resultTwo = yield pool_1.pool.query("SELECT * FROM usertable");
             console.table(resultTwo.rows);
-            //await client.query("COMMIT");
-            //await pool.end(); CHANGE
-            /*adding client.end()*/
-            //client.end();
-            //results.release();
             console.log("client disconnected");
         }
         catch (e) {

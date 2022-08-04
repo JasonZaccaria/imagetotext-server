@@ -4,17 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-//import dotenv from "dotenv";
-require("dotenv").config(); //CHANGES MADE BECAUSE ABOVE IMPORT NOT WORKING ON JWT AUTHORIZATION
+require("dotenv").config();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const { Pool } = require("pg");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer"); //for multipart form data i need it
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 const path = require("path");
-/*below are the imports for our router components! we will have to go in here after we are done and add app.use(router OR userDataRouter)*/
+//below are the imports for our router components! we will have to go in here after we are done and add app.use(router OR userDataRouter)
 const authRoutes_1 = require("./routes/authRoutes");
 const userDataRoutes_1 = require("./routes/userDataRoutes");
 //changes for multer adding in disk storage
@@ -27,24 +26,16 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + "-" + file.originalname /*+ "-" + uniqueSuffix*/);
     },
 });
-//end of changes for multer disk storage
-//let upload = multer({ dest: "uploads/" }); //for multipart form data i need it
 let upload = multer({ storage: storage });
-//dotenv.config();
-//https://blog.logrocket.com/how-to-set-up-node-typescript-express/
 const app = (0, express_1.default)();
-const port = 8000; //process.env.PORT;
+const port = process.env.PORT;
 app.use(cors({
     credentials: true,
     origin: true,
     sameSite: "none",
-    //origin: "localhost:3000/login",
 }));
 app.use(express_1.default.json({ limit: "50mb" }));
 app.use(cookieParser());
-//app.use(upload.array());
-//app.use(express.static("public"));
-//here we will set up db
 //auth
 app.use(authRoutes_1.router);
 //userroutes

@@ -23,7 +23,7 @@ var _UserData_email, _UserData_title, _UserData_stringConversion, _UserData_file
 Object.defineProperty(exports, "__esModule", { value: true });
 const pool_1 = require("../services/pool");
 const multer = require("multer");
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to maodify folders and files
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "uploads/");
@@ -35,12 +35,7 @@ const storage = multer.diskStorage({
 });
 let upload = multer({ storage: storage });
 class UserData {
-    constructor(email, title, stringConversion, 
-    //copiedFilePath: string,
-    filename, //new
-    path, 
-    //currentDate: string,
-    mimetype) {
+    constructor(email, title, stringConversion, filename, path, mimetype) {
         _UserData_email.set(this, void 0);
         _UserData_title.set(this, void 0);
         _UserData_stringConversion.set(this, void 0);
@@ -55,7 +50,6 @@ class UserData {
         __classPrivateFieldSet(this, _UserData_path, path, "f");
         __classPrivateFieldSet(this, _UserData_copiedFilePath, `uploads/${email}/${filename}`, "f");
         __classPrivateFieldSet(this, _UserData_filename, filename, "f");
-        //this.#currentDate = currentDate;
         __classPrivateFieldSet(this, _UserData_mimetype, mimetype, "f");
     }
     get getEmail() {
@@ -116,7 +110,6 @@ class UserData {
                 }
                 console.log("file copied to user directory");
             });
-            //let copiedFilePath = `uploads/${req.user.user}/${req.file.filename}`;
             try {
                 const results = pool_1.pool.query("INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)", [
                     __classPrivateFieldGet(this, _UserData_email, "f"),

@@ -15,13 +15,8 @@ function checkUsersTwo(user) {
     return __awaiter(this, void 0, void 0, function* () {
         let userDuplicate = false;
         try {
-            //const client = await pool.connect();
             console.log("connected successfully");
             const results = yield pool_1.pool.query("SELECT email FROM usertable WHERE email = $1", [user]);
-            //results.release();
-            //await pool.end(); CHANGE
-            //client.end();
-            //more changes start
             //testing what happens when unknown user is here
             console.log(results.rows);
             if (results.rows.length === 0) {

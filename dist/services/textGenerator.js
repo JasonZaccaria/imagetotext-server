@@ -13,19 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tesseract_js_1 = __importDefault(require("tesseract.js"));
-/*function imageToText(img: ImageLike): void {
-  Tesseract.recognize(img, "eng", { logger: (m) => console.log(m) }).then(
-    ({ data: { text } }) => {
-      console.log(text);
-    }
-  );
-}*/
 function imageToText(img) {
     return __awaiter(this, void 0, void 0, function* () {
         const convertedToText = yield tesseract_js_1.default.recognize(img, "eng", {
             logger: (m) => console.log(m),
         });
-        //console.log(convertedToText.data["text"]);
         return convertedToText.data["text"];
     });
 }

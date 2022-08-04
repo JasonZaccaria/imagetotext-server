@@ -22,7 +22,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _Register_email, _Register_password;
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require("bcrypt"); //used to hash our users passwords
-const fs = require("fs"); //used to manipulate folders and files
+const fs = require("fs"); //used to modify folders and files
 const checkUsers_1 = require("../services/checkUsers");
 const db_1 = require("../services/db");
 class Register {

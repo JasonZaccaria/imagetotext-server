@@ -15,7 +15,7 @@ function readUploads(): void {
         /*here we are iterating through the length of the files array we get back, and
         we are using an if statement to check if the file is a directory or not
         if it evaluates to false then we simply use fs.unlink to delete that file from the directory*/
-        fs.unlink(`${directoryPath}/${files[i].name}`, (err) => {
+        fs.unlink(`${directoryPath}/${files[i].name}`, (err: any) => {
           if (err) {
             console.log(err);
           } else {

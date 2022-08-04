@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Data_1 = __importDefault(require("../models/Data"));
-//import { authenticateTokenTwo } from "../services/authenticateToken";
 const dataController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let callData = new Data_1.default(req.user.user);
     let dataResponse = yield callData.getData();

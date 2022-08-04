@@ -40,7 +40,7 @@ router.get("/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.clearCookie("token", {
         sameSite: "none",
         secure: true,
-    } /*, { domain: "localhost:3000", path: "/user" }*/);
+    });
     res.end();
 }));
 router.post("/token", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,8 +51,6 @@ router.post("/token", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     try {
         const compareRefreshQuery = yield pool_1.pool.query("SELECT refresh FROM usertable");
-        //await compareRefreshQuery.end();
-        //compareRefreshQuery.release();
         if (compareRefreshQuery.rows[0] === refreshToken) {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if (err) {
@@ -71,3 +69,15 @@ router.post("/token", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json({ failure: "could not authenticate refresh token" });
     }
 }));
+router.get("/halt", (req, res) => {
+    let date = new Date();
+    date.setTime(date.getTime() + 5 * 60 * 1000);
+    res.cookie("halt", "asdfasdf", {
+        sameSite: "none",
+        secure: true,
+        /*maxAge: 300,*/
+        expires: date,
+    });
+    res.json({ success: "halt cookie has been created successfully" });
+    res.end();
+});
