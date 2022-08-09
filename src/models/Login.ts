@@ -1,4 +1,4 @@
-import { pool } from "../services/pool";
+import { pool } from "../services/pools";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 import { loginObject } from "../services/Types";

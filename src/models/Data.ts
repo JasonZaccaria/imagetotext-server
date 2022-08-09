@@ -1,4 +1,4 @@
-import { pool } from "../services/pool";
+import { pool } from "../services/pools";
 const fs = require("fs"); //used to modify folders and files
 import { dataObject } from "../services/Types";
 

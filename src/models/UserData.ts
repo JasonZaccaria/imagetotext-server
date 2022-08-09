@@ -1,4 +1,4 @@
-import { pool } from "../services/pool";
+import { pool } from "../services/pools";
 const multer = require("multer");
 const fs = require("fs"); //used to maodify folders and files
 import { userDataObject } from "../services/Types";

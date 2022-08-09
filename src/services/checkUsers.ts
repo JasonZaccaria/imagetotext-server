@@ -1,4 +1,4 @@
-import { pool } from "./pool";
+import { pool } from "./pools";
 
 async function checkUsersTwo(user: string): Promise<boolean | undefined> {
   let userDuplicate: boolean = false;

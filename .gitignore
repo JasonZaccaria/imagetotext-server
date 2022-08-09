@@ -1,5 +1,5 @@
 uploads/
-pool.ts
-pool.js
+pools.ts
+pools.js
 .env
 node_modules

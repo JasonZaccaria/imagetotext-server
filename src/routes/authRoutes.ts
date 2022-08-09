@@ -11,7 +11,7 @@ const fs = require("fs"); //used to manipulate folders and files
 const path = require("path");
 
 //below is our pool configuration
-import { pool } from "../services/pool";
+import { pool } from "../services/pools";
 //function for entering username and password into db
 import { db } from "../services/db";
 //import for authenticate toke two
