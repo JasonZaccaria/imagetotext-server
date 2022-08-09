@@ -8,7 +8,6 @@ import express, {
   NextFunction,
 } from "express";
 //import { resolve } from "path"
-import * as path from "path";
 require("dotenv").config();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
@@ -16,7 +15,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer"); //for multipart form data i need it
 const fs = require("fs"); //used to modify folders and files
-//const path = require("path");
+const path = require("path");
 //below are the imports for our router components! we will have to go in here after we are done and add app.use(router OR userDataRouter)
 import { router } from "./routes/authRoutes";
 import { userDataRouter } from "./routes/userDataRoutes";
