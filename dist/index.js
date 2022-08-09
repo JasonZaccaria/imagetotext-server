@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+//import { resolve } from "path"
 require("dotenv").config();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
-const { Pool } = require("pg");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer"); //for multipart form data i need it
