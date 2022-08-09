@@ -19,9 +19,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var _Data_email;
 Object.defineProperty(exports, "__esModule", { value: true });
-const pools_1 = require("../services/pools");
+const pools_1 = __importDefault(require("../services/pools"));
 const fs = require("fs"); //used to modify folders and files
 //this class retrieves the data from the db and sends it back to the user
 class Data {
@@ -39,7 +42,7 @@ class Data {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let userDataArray = [];
-                const results = yield pools_1.pool.query("SELECT * FROM userposts WHERE email = $1", [__classPrivateFieldGet(this, _Data_email, "f")]);
+                const results = yield pools_1.default.query("SELECT * FROM userposts WHERE email = $1", [__classPrivateFieldGet(this, _Data_email, "f")]);
                 const userTable = results.rows;
                 function enterData() {
                     return __awaiter(this, void 0, void 0, function* () {

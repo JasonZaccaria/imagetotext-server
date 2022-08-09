@@ -8,15 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkUsersTwo = void 0;
-const pools_1 = require("./pools");
+const pools_1 = __importDefault(require("./pools"));
 function checkUsersTwo(user) {
     return __awaiter(this, void 0, void 0, function* () {
         let userDuplicate = false;
         try {
             console.log("connected successfully");
-            const results = yield pools_1.pool.query("SELECT email FROM usertable WHERE email = $1", [user]);
+            const results = yield pools_1.default.query("SELECT email FROM usertable WHERE email = $1", [user]);
             //testing what happens when unknown user is here
             console.log(results.rows);
             if (results.rows.length === 0) {

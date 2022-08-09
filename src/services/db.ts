@@ -1,4 +1,4 @@
-import { pool } from "./pools";
+import pool from "./pools";
 
 async function db(userEmail: any, userPassword: any): Promise<void> {
   try {

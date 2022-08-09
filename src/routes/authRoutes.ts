@@ -11,7 +11,7 @@ const fs = require("fs"); //used to manipulate folders and files
 const path = require("path");
 
 //below is our pool configuration
-import { pool } from "../services/pools";
+import pool from "../services/pools";
 //function for entering username and password into db
 import { db } from "../services/db";
 //import for authenticate toke two
@@ -33,13 +33,10 @@ router.post("/login", loginController);
 
 router.get("/logout", async (req: Request, res: Response) => {
   console.log("token has been cleared");
-  res.clearCookie(
-    "token",
-    {
-      sameSite: "none",
-      secure: true,
-    }
-  );
+  res.clearCookie("token", {
+    sameSite: "none",
+    secure: true,
+  });
   res.end();
 });
 
