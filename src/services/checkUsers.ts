@@ -1,4 +1,5 @@
-import pool from "./pools";
+//import pool from "./pools";
+const pool = require("../services/pools");
 
 async function checkUsersTwo(user: string): Promise<boolean | undefined> {
   let userDuplicate: boolean = false;

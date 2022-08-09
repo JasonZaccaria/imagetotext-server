@@ -19,12 +19,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var _Login_email, _Login_password;
 Object.defineProperty(exports, "__esModule", { value: true });
-const pools_1 = __importDefault(require("../services/pools"));
+//import pool from "../services/pools";
+const pool = require("../services/pools");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 class Login {
@@ -49,7 +47,7 @@ class Login {
     loginUser() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userQuery = yield pools_1.default.query("SELECT * FROM usertable WHERE email = $1", [__classPrivateFieldGet(this, _Login_email, "f")]);
+                const userQuery = yield pool.query("SELECT * FROM usertable WHERE email = $1", [__classPrivateFieldGet(this, _Login_email, "f")]);
                 console.log("connected to db successfully");
                 if (userQuery.rows.length === 0) {
                     console.log("account not found");
@@ -63,7 +61,7 @@ class Login {
                         const userObject = { user: __classPrivateFieldGet(this, _Login_email, "f") };
                         const accessToken = jwt.sign(userObject, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "900s" });
                         const refreshToken = jwt.sign(userObject, process.env.REFRESH_TOKEN_SECRET);
-                        const refreshQuery = yield pools_1.default.query("UPDATE usertable SET refresh = $1 WHERE email = $2", [refreshToken, __classPrivateFieldGet(this, _Login_email, "f")]);
+                        const refreshQuery = yield pool.query("UPDATE usertable SET refresh = $1 WHERE email = $2", [refreshToken, __classPrivateFieldGet(this, _Login_email, "f")]);
                         return { token: accessToken, rtoken: refreshToken };
                     }
                     else {

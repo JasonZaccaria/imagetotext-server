@@ -1,4 +1,5 @@
-import pool from "./pools";
+//import pool from "./pools";
+const pool = require("../services/pools");
 
 async function db(userEmail: any, userPassword: any): Promise<void> {
   try {

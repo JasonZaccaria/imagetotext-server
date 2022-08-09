@@ -19,12 +19,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var _UserData_email, _UserData_title, _UserData_stringConversion, _UserData_filename, _UserData_path, _UserData_copiedFilePath, _UserData_currentDate, _UserData_mimetype;
 Object.defineProperty(exports, "__esModule", { value: true });
-const pools_1 = __importDefault(require("../services/pools"));
+//import pool from "../services/pools";
+const pool = require("../services/pools");
 const multer = require("multer");
 const fs = require("fs"); //used to maodify folders and files
 const storage = multer.diskStorage({
@@ -114,7 +112,7 @@ class UserData {
                 console.log("file copied to user directory");
             });
             try {
-                const results = pools_1.default.query("INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)", [
+                const results = pool.query("INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)", [
                     __classPrivateFieldGet(this, _UserData_email, "f"),
                     __classPrivateFieldGet(this, _UserData_title, "f"),
                     __classPrivateFieldGet(this, _UserData_stringConversion, "f"),
@@ -123,7 +121,7 @@ class UserData {
                     __classPrivateFieldGet(this, _UserData_currentDate, "f"),
                     __classPrivateFieldGet(this, _UserData_mimetype, "f"),
                 ]);
-                const resultTwo = yield pools_1.default.query("SELECT * FROM userposts");
+                const resultTwo = yield pool.query("SELECT * FROM userposts");
                 console.table(resultTwo.rows);
                 return { success: "data inserted into db" };
             }
