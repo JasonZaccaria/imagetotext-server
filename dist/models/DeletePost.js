@@ -21,7 +21,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _DeletePost_email, _DeletePost_titleOfPost;
 Object.defineProperty(exports, "__esModule", { value: true });
-const pool_1 = require("../services/pool");
+const pools_1 = require("../services/pools");
 const fs = require("fs"); //used to modify folders and files
 class DeletePost {
     constructor(email, titleOfPost) {
@@ -45,11 +45,11 @@ class DeletePost {
     deletePosts() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const results = yield pool_1.pool.query("SELECT file FROM userposts WHERE email = $1 AND title = $2", [__classPrivateFieldGet(this, _DeletePost_email, "f"), __classPrivateFieldGet(this, _DeletePost_titleOfPost, "f")]);
+                const results = yield pools_1.pool.query("SELECT file FROM userposts WHERE email = $1 AND title = $2", [__classPrivateFieldGet(this, _DeletePost_email, "f"), __classPrivateFieldGet(this, _DeletePost_titleOfPost, "f")]);
                 console.table(results.rows[0]["file"]);
                 let removedPost = results.rows[0]["file"];
                 fs.unlinkSync(removedPost);
-                const resultsTwo = yield pool_1.pool.query("DELETE FROM userposts WHERE title = $1", [__classPrivateFieldGet(this, _DeletePost_titleOfPost, "f")]);
+                const resultsTwo = yield pools_1.pool.query("DELETE FROM userposts WHERE title = $1", [__classPrivateFieldGet(this, _DeletePost_titleOfPost, "f")]);
                 return { success: "content has been sucessfully deleted" };
             }
             catch (err) {

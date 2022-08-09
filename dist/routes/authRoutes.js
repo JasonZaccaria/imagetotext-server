@@ -24,7 +24,7 @@ const cookieParser = require("cookie-parser");
 const fs = require("fs"); //used to manipulate folders and files
 const path = require("path");
 //below is our pool configuration
-const pool_1 = require("../services/pool");
+const pools_1 = require("../services/pools");
 //import for authenticate toke two
 const authenticateToken_1 = require("../services/authenticateToken");
 //now we will import below our controllers
@@ -50,7 +50,7 @@ router.post("/token", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return res.json({ failure: "no refresh token sent back to server" });
     }
     try {
-        const compareRefreshQuery = yield pool_1.pool.query("SELECT refresh FROM usertable");
+        const compareRefreshQuery = yield pools_1.pool.query("SELECT refresh FROM usertable");
         if (compareRefreshQuery.rows[0] === refreshToken) {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if (err) {

@@ -13,18 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Login_1 = __importDefault(require("../models/Login"));
+const cookieParser = require("cookie-parser");
 const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let callLogin = new Login_1.default(req.body.user, req.body.pass);
-    let getLoginResponse = yield callLogin.loginUser();
-    let accessToken = getLoginResponse.token;
-    let refreshToken = getLoginResponse.rtoken;
-    if (accessToken) {
-        res.cookie("token", accessToken, { sameSite: "none", secure: true });
-        res.cookie("rtoken", refreshToken, { sameSite: "none", secure: true });
-        res.json({ accessToken: accessToken });
+    if (Object.keys(req.cookies)[0] === "halt") {
+        res.json({ halt: "not allowed" });
     }
     else {
-        res.json({ failure: "could not login user/db error/network error" });
+        let callLogin = new Login_1.default(req.body.user, req.body.pass);
+        let getLoginResponse = yield callLogin.loginUser();
+        let accessToken = getLoginResponse.token;
+        let refreshToken = getLoginResponse.rtoken;
+        if (accessToken) {
+            res.cookie("token", accessToken, { sameSite: "none", secure: true });
+            res.cookie("rtoken", refreshToken, { sameSite: "none", secure: true });
+            res.json({ accessToken: accessToken });
+        }
+        else {
+            res.json({ failure: "could not login user/db error/network error" });
+        }
     }
 });
 exports.default = loginController;

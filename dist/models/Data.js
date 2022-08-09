@@ -21,7 +21,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _Data_email;
 Object.defineProperty(exports, "__esModule", { value: true });
-const pool_1 = require("../services/pool");
+const pools_1 = require("../services/pools");
 const fs = require("fs"); //used to modify folders and files
 //this class retrieves the data from the db and sends it back to the user
 class Data {
@@ -39,7 +39,7 @@ class Data {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let userDataArray = [];
-                const results = yield pool_1.pool.query("SELECT * FROM userposts WHERE email = $1", [__classPrivateFieldGet(this, _Data_email, "f")]);
+                const results = yield pools_1.pool.query("SELECT * FROM userposts WHERE email = $1", [__classPrivateFieldGet(this, _Data_email, "f")]);
                 const userTable = results.rows;
                 function enterData() {
                     return __awaiter(this, void 0, void 0, function* () {

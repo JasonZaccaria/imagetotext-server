@@ -10,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = void 0;
-const pool_1 = require("./pool");
+const pools_1 = require("./pools");
 function db(userEmail, userPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             //const client = await pool.connect();
             console.log("conneccted successfully");
-            const results = yield pool_1.pool.query("INSERT INTO usertable(email, password) VALUES($1, $2)", [userEmail, userPassword]);
-            const resultTwo = yield pool_1.pool.query("SELECT * FROM usertable");
+            const results = yield pools_1.pool.query("INSERT INTO usertable(email, password) VALUES($1, $2)", [userEmail, userPassword]);
+            const resultTwo = yield pools_1.pool.query("SELECT * FROM usertable");
             console.table(resultTwo.rows);
             console.log("client disconnected");
         }
