@@ -2,11 +2,11 @@ const { Pool } = require("pg");
 //import { Pool } from "pg";
 
 const pool = new Pool({
-  user: "postgres",
-  password: "ILTPvGaWA@1",
-  host: "localhost",
-  port: 5432,
-  database: "imagetotext",
+  user: process.env.User,
+  password: process.env.Password,
+  host: process.env.Host,
+  port: process.env.Port,
+  database: process.env.Database,
   max: 10, //was 20
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
