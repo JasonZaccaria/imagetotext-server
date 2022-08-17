@@ -28,12 +28,13 @@ class Data {
       const userTable = results.rows;
       async function enterData() {
         for (let i = 0; i < userTable.length; i++) {
-          let tempData = fs.readFileSync(userTable[i]["file"]);
-          let base64 = tempData.toString("base64");
+          /*let tempData = fs.readFileSync(userTable[i]["file"]);
+          let base64 = tempData.toString("base64");*/
           userDataArray.push([
             userTable[i]["title"],
             userTable[i]["conversion"],
-            base64,
+            /*base64,*/
+            userTable[i]["file"], //this will just be our link to our image file rather than a base64 encoded image
             userTable[i]["dates"],
             userTable[i]["mimetypes"],
           ]);

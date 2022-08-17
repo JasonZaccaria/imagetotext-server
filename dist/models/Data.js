@@ -45,12 +45,13 @@ class Data {
                 function enterData() {
                     return __awaiter(this, void 0, void 0, function* () {
                         for (let i = 0; i < userTable.length; i++) {
-                            let tempData = fs.readFileSync(userTable[i]["file"]);
-                            let base64 = tempData.toString("base64");
+                            /*let tempData = fs.readFileSync(userTable[i]["file"]);
+                            let base64 = tempData.toString("base64");*/
                             userDataArray.push([
                                 userTable[i]["title"],
                                 userTable[i]["conversion"],
-                                base64,
+                                /*base64,*/
+                                userTable[i]["file"],
                                 userTable[i]["dates"],
                                 userTable[i]["mimetypes"],
                             ]);

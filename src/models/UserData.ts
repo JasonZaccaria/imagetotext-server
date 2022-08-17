@@ -1,20 +1,46 @@
 //import pool from "../services/pools";
 const pool = require("../services/pools");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs"); //used to maodify folders and files
 import { userDataObject } from "../services/Types";
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
     cb(null, "uploads/");
   },
   filename: function (req: any, file: any, cb: any) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + "-" + file.originalname /*+ "-" + uniqueSuffix*/);
+    cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
 
-let upload = multer({ storage: storage });
+let upload = multer({ storage: storage });*/
+
+const config = {
+  bucketName: process.env.AWS_BUCKET_NAME,
+  region: process.env.AWS_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+};
+
+const s3 = new S3Client(config);
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req: any, file: any, cb: any) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req: any, file: any, cb: any) {
+      cb(null, "uploads/" + Date.now().toString() + "-" + file.originalname);
+    },
+  }),
+});
 
 class UserData {
   #email: string;
@@ -22,7 +48,7 @@ class UserData {
   #stringConversion: string;
   #filename: string;
   #path: string;
-  #copiedFilePath: string | null;
+  /*#copiedFilePath: string | null;*/
   #currentDate: Date = new Date();
   #mimetype: string;
 
@@ -38,7 +64,7 @@ class UserData {
     this.#title = title;
     this.#stringConversion = stringConversion;
     this.#path = path;
-    this.#copiedFilePath = `uploads/${email}/${filename}`;
+    /*this.#copiedFilePath = `uploads/${email}/${filename}`;*/
     this.#filename = filename;
     this.#mimetype = mimetype;
   }
@@ -83,13 +109,13 @@ class UserData {
     this.#path = newPath;
   }
 
-  get getCopiedFilePath(): string | null {
+  /*get getCopiedFilePath(): string | null {
     return this.#copiedFilePath;
   }
 
   set setCopiedFilePath(newCopiedFilePath: string) {
     this.#copiedFilePath = newCopiedFilePath;
-  }
+  }*/
 
   get getCurrentDate(): Date {
     return this.#currentDate;
@@ -110,7 +136,7 @@ class UserData {
   async saveData(): Promise<userDataObject> {
     let dateInMis: Date = new Date();
     this.#currentDate = new Date(dateInMis);
-    fs.copyFile(
+    /*fs.copyFile(
       this.#path,
       `./uploads/${this.#email}/${this.#filename}`,
       (err: any) => {
@@ -119,7 +145,7 @@ class UserData {
         }
         console.log("file copied to user directory");
       }
-    );
+    );*/
     try {
       const results = pool.query(
         "INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)",
@@ -127,8 +153,8 @@ class UserData {
           this.#email,
           this.#title,
           this.#stringConversion,
-          /*req.file.path,*/
-          this.#copiedFilePath,
+          /*this.#copiedFilePath,*/
+          this.#path,
           this.#currentDate,
           this.#mimetype,
         ]

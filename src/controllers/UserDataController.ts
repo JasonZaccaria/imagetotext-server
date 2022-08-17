@@ -7,8 +7,10 @@ const userDataController = async (req: any, res: Response) => {
     req.user.user,
     req.body.title,
     req.body.stringConversion,
-    req.file.filename,
-    req.file.path,
+    /*req.file.filename,*/
+    req.file.originalname,
+    /*req.file.path,*/
+    req.file.location,
     req.file.mimetype
   );
 

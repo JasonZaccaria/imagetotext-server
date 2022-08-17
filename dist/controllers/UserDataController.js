@@ -14,7 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const UserData_1 = __importDefault(require("../models/UserData"));
 const userDataController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let userDataModel = new UserData_1.default(req.user.user, req.body.title, req.body.stringConversion, req.file.filename, req.file.path, req.file.mimetype);
+    let userDataModel = new UserData_1.default(req.user.user, req.body.title, req.body.stringConversion, 
+    /*req.file.filename,*/
+    req.file.originalname, 
+    /*req.file.path,*/
+    req.file.location, req.file.mimetype);
     let userDataModelResponse = yield userDataModel.saveData();
     if (userDataModelResponse.success) {
         res.json({ success: userDataModelResponse.success });

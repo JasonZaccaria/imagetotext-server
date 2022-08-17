@@ -19,22 +19,46 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _UserData_email, _UserData_title, _UserData_stringConversion, _UserData_filename, _UserData_path, _UserData_copiedFilePath, _UserData_currentDate, _UserData_mimetype;
+var _UserData_email, _UserData_title, _UserData_stringConversion, _UserData_filename, _UserData_path, _UserData_currentDate, _UserData_mimetype;
 Object.defineProperty(exports, "__esModule", { value: true });
 //import pool from "../services/pools";
 const pool = require("../services/pools");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs"); //used to maodify folders and files
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + "-" + file.originalname /*+ "-" + uniqueSuffix*/);
-    },
+/*const storage = multer.diskStorage({
+  destination: function (req: any, file: any, cb: any) {
+    cb(null, "uploads/");
+  },
+  filename: function (req: any, file: any, cb: any) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
 });
-let upload = multer({ storage: storage });
+
+let upload = multer({ storage: storage });*/
+const config = {
+    bucketName: process.env.AWS_BUCKET_NAME,
+    region: process.env.AWS_BUCKET_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+    },
+};
+const s3 = new S3Client(config);
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, "uploads/" + Date.now().toString() + "-" + file.originalname);
+        },
+    }),
+});
 class UserData {
     constructor(email, title, stringConversion, filename, path, mimetype) {
         _UserData_email.set(this, void 0);
@@ -42,14 +66,14 @@ class UserData {
         _UserData_stringConversion.set(this, void 0);
         _UserData_filename.set(this, void 0);
         _UserData_path.set(this, void 0);
-        _UserData_copiedFilePath.set(this, void 0);
+        /*#copiedFilePath: string | null;*/
         _UserData_currentDate.set(this, new Date());
         _UserData_mimetype.set(this, void 0);
         __classPrivateFieldSet(this, _UserData_email, email, "f");
         __classPrivateFieldSet(this, _UserData_title, title, "f");
         __classPrivateFieldSet(this, _UserData_stringConversion, stringConversion, "f");
         __classPrivateFieldSet(this, _UserData_path, path, "f");
-        __classPrivateFieldSet(this, _UserData_copiedFilePath, `uploads/${email}/${filename}`, "f");
+        /*this.#copiedFilePath = `uploads/${email}/${filename}`;*/
         __classPrivateFieldSet(this, _UserData_filename, filename, "f");
         __classPrivateFieldSet(this, _UserData_mimetype, mimetype, "f");
     }
@@ -83,12 +107,13 @@ class UserData {
     set setPath(newPath) {
         __classPrivateFieldSet(this, _UserData_path, newPath, "f");
     }
-    get getCopiedFilePath() {
-        return __classPrivateFieldGet(this, _UserData_copiedFilePath, "f");
+    /*get getCopiedFilePath(): string | null {
+      return this.#copiedFilePath;
     }
-    set setCopiedFilePath(newCopiedFilePath) {
-        __classPrivateFieldSet(this, _UserData_copiedFilePath, newCopiedFilePath, "f");
-    }
+  
+    set setCopiedFilePath(newCopiedFilePath: string) {
+      this.#copiedFilePath = newCopiedFilePath;
+    }*/
     get getCurrentDate() {
         return __classPrivateFieldGet(this, _UserData_currentDate, "f");
     }
@@ -105,19 +130,23 @@ class UserData {
         return __awaiter(this, void 0, void 0, function* () {
             let dateInMis = new Date();
             __classPrivateFieldSet(this, _UserData_currentDate, new Date(dateInMis), "f");
-            fs.copyFile(__classPrivateFieldGet(this, _UserData_path, "f"), `./uploads/${__classPrivateFieldGet(this, _UserData_email, "f")}/${__classPrivateFieldGet(this, _UserData_filename, "f")}`, (err) => {
+            /*fs.copyFile(
+              this.#path,
+              `./uploads/${this.#email}/${this.#filename}`,
+              (err: any) => {
                 if (err) {
-                    console.log(err);
+                  console.log(err);
                 }
                 console.log("file copied to user directory");
-            });
+              }
+            );*/
             try {
                 const results = pool.query("INSERT INTO userposts (email, title, conversion, file, dates, mimetypes) VALUES ($1, $2, $3, $4, $5, $6)", [
                     __classPrivateFieldGet(this, _UserData_email, "f"),
                     __classPrivateFieldGet(this, _UserData_title, "f"),
                     __classPrivateFieldGet(this, _UserData_stringConversion, "f"),
-                    /*req.file.path,*/
-                    __classPrivateFieldGet(this, _UserData_copiedFilePath, "f"),
+                    /*this.#copiedFilePath,*/
+                    __classPrivateFieldGet(this, _UserData_path, "f"),
                     __classPrivateFieldGet(this, _UserData_currentDate, "f"),
                     __classPrivateFieldGet(this, _UserData_mimetype, "f"),
                 ]);
@@ -133,5 +162,5 @@ class UserData {
         });
     }
 }
-_UserData_email = new WeakMap(), _UserData_title = new WeakMap(), _UserData_stringConversion = new WeakMap(), _UserData_filename = new WeakMap(), _UserData_path = new WeakMap(), _UserData_copiedFilePath = new WeakMap(), _UserData_currentDate = new WeakMap(), _UserData_mimetype = new WeakMap();
+_UserData_email = new WeakMap(), _UserData_title = new WeakMap(), _UserData_stringConversion = new WeakMap(), _UserData_filename = new WeakMap(), _UserData_path = new WeakMap(), _UserData_currentDate = new WeakMap(), _UserData_mimetype = new WeakMap();
 exports.default = UserData;

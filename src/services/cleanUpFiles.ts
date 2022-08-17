@@ -1,3 +1,4 @@
+//no longer working as we have s3 for file storage now!!!
 const fs = require("fs"); //used to modify folders and files
 const path = require("path");
 const cron = require("node-cron");
