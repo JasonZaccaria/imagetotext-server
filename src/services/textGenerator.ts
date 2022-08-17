@@ -1,6 +1,7 @@
-import Tesseract, { ImageLike } from "tesseract.js";
+import tesseract from "node-tesseract-ocr";
+/*import Tesseract, { ImageLike } from "tesseract.js";
 
-async function imageToText(img: any /*ImageLik*/): Promise<string> {
+async function imageToText(img: any): Promise<string> {
   const convertedToText: Tesseract.RecognizeResult = await Tesseract.recognize(
     img,
     "eng",
@@ -9,5 +10,11 @@ async function imageToText(img: any /*ImageLik*/): Promise<string> {
     }
   );
   return convertedToText.data["text"];
-}
+}*/
+
+const imageToText = async (img: string) => {
+  const convertedToText: string = await tesseract.recognize(img);
+  return convertedToText;
+};
+
 export default imageToText;

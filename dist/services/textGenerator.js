@@ -12,13 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tesseract_js_1 = __importDefault(require("tesseract.js"));
-function imageToText(img /*ImageLik*/) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const convertedToText = yield tesseract_js_1.default.recognize(img, "eng", {
-            logger: (m) => console.log(m),
-        });
-        return convertedToText.data["text"];
-    });
-}
+const node_tesseract_ocr_1 = __importDefault(require("node-tesseract-ocr"));
+/*import Tesseract, { ImageLike } from "tesseract.js";
+
+async function imageToText(img: any): Promise<string> {
+  const convertedToText: Tesseract.RecognizeResult = await Tesseract.recognize(
+    img,
+    "eng",
+    {
+      logger: (m) => console.log(m),
+    }
+  );
+  return convertedToText.data["text"];
+}*/
+const imageToText = (img) => __awaiter(void 0, void 0, void 0, function* () {
+    const convertedToText = yield node_tesseract_ocr_1.default.recognize(img);
+    return convertedToText;
+});
 exports.default = imageToText;
