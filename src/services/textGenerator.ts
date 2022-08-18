@@ -1,6 +1,6 @@
-//import tesseract from "node-tesseract-ocr";
+import tesseract from "node-tesseract-ocr";
 //import Tesseract, { ImageLike } from "tesseract.js";
-import { createWorker } from "tesseract.js";
+//import { createWorker } from "tesseract.js";
 
 /*async function imageToText(img: any): Promise<string> {
   const convertedToText: Tesseract.RecognizeResult = await Tesseract.recognize(
@@ -13,11 +13,11 @@ import { createWorker } from "tesseract.js";
   return convertedToText.data["text"];
 }*/
 
-/*const imageToText = async (img: string) => {
+const imageToText = async (img: string) => {
   const convertedToText: string = await tesseract.recognize(img);
   return convertedToText;
-};*/
-const worker = createWorker({
+};
+/*const worker = createWorker({
   logger: (m) => console.log(m),
 });
 
@@ -29,6 +29,6 @@ const imageToText = async (img: string) => {
   console.log(data.text);
   //await worker.terminate();
   return data.text;
-};
+};*/
 
 export default imageToText;

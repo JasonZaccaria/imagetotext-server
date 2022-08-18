@@ -8,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-//import tesseract from "node-tesseract-ocr";
+const node_tesseract_ocr_1 = __importDefault(require("node-tesseract-ocr"));
 //import Tesseract, { ImageLike } from "tesseract.js";
-const tesseract_js_1 = require("tesseract.js");
+//import { createWorker } from "tesseract.js";
 /*async function imageToText(img: any): Promise<string> {
   const convertedToText: Tesseract.RecognizeResult = await Tesseract.recognize(
     img,
@@ -22,20 +25,21 @@ const tesseract_js_1 = require("tesseract.js");
   );
   return convertedToText.data["text"];
 }*/
-/*const imageToText = async (img: string) => {
-  const convertedToText: string = await tesseract.recognize(img);
-  return convertedToText;
-};*/
-const worker = (0, tesseract_js_1.createWorker)({
-    logger: (m) => console.log(m),
-});
 const imageToText = (img) => __awaiter(void 0, void 0, void 0, function* () {
-    yield worker.load();
-    yield worker.loadLanguage("eng");
-    yield worker.initialize("eng");
-    const { data } = yield worker.recognize(img);
-    console.log(data.text);
-    //await worker.terminate();
-    return data.text;
+    const convertedToText = yield node_tesseract_ocr_1.default.recognize(img);
+    return convertedToText;
 });
+/*const worker = createWorker({
+  logger: (m) => console.log(m),
+});
+
+const imageToText = async (img: string) => {
+  await worker.load();
+  await worker.loadLanguage("eng");
+  await worker.initialize("eng");
+  const { data } = await worker.recognize(img);
+  console.log(data.text);
+  //await worker.terminate();
+  return data.text;
+};*/
 exports.default = imageToText;
