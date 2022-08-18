@@ -35,7 +35,7 @@ const imageToText = (img) => __awaiter(void 0, void 0, void 0, function* () {
     yield worker.initialize("eng");
     const { data } = yield worker.recognize(img);
     console.log(data.text);
-    yield worker.terminate();
+    //await worker.terminate();
     return data.text;
 });
 exports.default = imageToText;

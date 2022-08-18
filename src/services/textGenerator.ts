@@ -27,7 +27,7 @@ const imageToText = async (img: string) => {
   await worker.initialize("eng");
   const { data } = await worker.recognize(img);
   console.log(data.text);
-  await worker.terminate();
+  //await worker.terminate();
   return data.text;
 };
 
