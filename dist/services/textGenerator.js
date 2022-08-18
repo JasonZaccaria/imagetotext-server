@@ -27,6 +27,7 @@ const node_tesseract_ocr_1 = __importDefault(require("node-tesseract-ocr"));
 }*/
 const imageToText = (img) => __awaiter(void 0, void 0, void 0, function* () {
     const convertedToText = yield node_tesseract_ocr_1.default.recognize(img);
+    console.log(convertedToText);
     return convertedToText;
 });
 /*const worker = createWorker({

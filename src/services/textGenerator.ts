@@ -14,7 +14,8 @@ import tesseract from "node-tesseract-ocr";
 }*/
 
 const imageToText = async (img: string) => {
-  const convertedToText: string = await tesseract.recognize(img);
+  const convertedToText = await tesseract.recognize(img);
+  console.log(convertedToText);
   return convertedToText;
 };
 /*const worker = createWorker({
