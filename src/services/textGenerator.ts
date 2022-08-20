@@ -1,6 +1,6 @@
 import tesseract from "node-tesseract-ocr";
 //import Tesseract, { ImageLike } from "tesseract.js";
-// import { createWorker } from "tesseract.js";
+//import { createWorker } from "tesseract.js";
 
 /*async function imageToText(img: any): Promise<string> {
   const convertedToText: Tesseract.RecognizeResult = await Tesseract.recognize(
