@@ -24,7 +24,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //import pool from "../services/pools";
 const pool = require("../services/pools");
 const fs = require("fs"); //used to modify folders and files
-const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, GetObjectCommand, DeleteObjectCommand, } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const config = {
@@ -79,7 +79,8 @@ class DeletePost {
                     Bucket: process.env.AWS_BUCKET_NAME,
                     Key: removedPost,
                 };
-                const getFile = new GetObjectCommand(getFileOptions);
+                //const getFile = new GetObjectCommand(getFileOptions);
+                const getFile = new DeleteObjectCommand(getFileOptions);
                 const response = yield s3.send(getFile);
                 const resultsTwo = yield pool.query("DELETE FROM userposts WHERE title = $1", [__classPrivateFieldGet(this, _DeletePost_titleOfPost, "f")]);
                 return { success: "content has been sucessfully deleted" };
